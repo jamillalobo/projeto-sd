@@ -1,7 +1,7 @@
 #include <LiquidCrystal_I2C.h>
 
 // Inicializa o LCD com o endereço I2C 0x27 (pode variar, verifique o seu módulo)
-LiquidCrystal_I2C lcd(0x27, 20, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // Definindo os pinos
 const int ledTurno = 3;
@@ -55,7 +55,7 @@ Local locais[18] = {
   {"Noite", "Fechado", "Instagramavel", "Yokocho Izakaya"},
   {"Noite", "Ar livre", "Instagramavel", "Mercado Torre"},
   {"Noite", "Fechado", "Romantica", "Pina Cocktails"},
-  {"Noite", "Ar livre", "Romantica", "Recife OriginalStyle"},
+  {"Noite", "Ar livre", "Romantica", "Barco Rio Capyba"},
   {"Noite", "Fechado", "Divertida", "Rockstar Pub"},
   {"Noite", "Ar livre", "Divertida", "Rua da Moeda"}
 };
@@ -97,13 +97,13 @@ void loop() {
             turno = 0;
           }
           delay(200);
-          lcd.clear(); // limpar o display
+          lcd.clear(); 
         }
         if (digitalRead(botaoConfirmar) == LOW){
           turnoConfirmado = true;
           estadoAtual = ESCOLHENDO_ESPACO;
           delay(200);
-          lcd.clear(); // limpar o display
+          lcd.clear(); 
         }
       } 
       break;
@@ -123,13 +123,13 @@ void loop() {
             espaco = 0;
           }
           delay(200);
-          lcd.clear(); // limpar o display
+          lcd.clear(); 
         }
         if (digitalRead(botaoConfirmar) == LOW){
           espacoConfirmado = true;
           estadoAtual = ESCOLHENDO_VIBE;
           delay(200);
-          lcd.clear(); // limpar o display
+          lcd.clear(); 
         }
       } 
       break;
@@ -149,7 +149,7 @@ void loop() {
             vibe = 0;
           }
           delay(200);
-          lcd.clear(); // limpar o display
+          lcd.clear();
         }
         if (digitalRead(botaoConfirmar) == LOW){
           vibeConfirmado = true;
@@ -158,7 +158,7 @@ void loop() {
           lcd.print("Escolhendo...");
           estadoAtual = FINALIZADO;
           delay(500);
-          lcd.clear(); // limpar o display
+          lcd.clear(); 
         }
       } 
       break;
@@ -181,8 +181,20 @@ void loop() {
       lcd.print("Local:");
       lcd.setCursor(0, 1);
       lcd.print(localSelecionado.nomeLocal);
-      
-      delay(5000);
+      delay(6000);
+
+      // Resetar endpoints e começar novamente
+      turnoConfirmado = false;
+      espacoConfirmado = false;
+      vibeConfirmado = false;
+      turno = 0;
+      espaco = 0;
+      vibe = 0;
+      estadoAtual = ESCOLHENDO_TURNO;
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Date Perfeito");
+      delay(2000);
       break;
   }
 }
